@@ -15,8 +15,10 @@ total 8 winning patterns
 // accessing all boxes :
 
 let boxes = document.querySelectorAll(".box");
-
 let resetBtn = document.querySelector("#reset-btn");
+let newGameBtn = document.querySelector("#new-btn");
+let msgContainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
 
 let turnO = true;
 
@@ -31,9 +33,15 @@ const winPatterns = [
   [6, 7, 8],
 ];
 
+const resetGame = () => {
+  turnO = true;
+  enableBoxes();
+  msgContainer.classList.add("hide");
+};
+
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
-    console.log("box was clicked");
+    // console.log("box was clicked");
     if (turnO) {
       box.innerText = "O";
       turnO = false;
@@ -46,6 +54,25 @@ boxes.forEach((box) => {
     checkWinner();
   });
 });
+
+const disableBoxes = () => {
+  for (box of boxes) {
+    box.disabled = true;
+  }
+};
+
+const enableBoxes = () => {
+  for (box of boxes) {
+    box.disabled = false;
+    box.innerText = "";
+  }
+};
+
+const showWinner = (winner) => {
+  msg.innerText = `Congratulations, Winner is ${winner}.`;
+  msgContainer.classList.remove("hide");
+  disableBoxes();
+};
 
 const checkWinner = () => {
   for (let pattern of winPatterns) {
@@ -61,8 +88,12 @@ const checkWinner = () => {
 
     if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
       if (pos1Val === pos2Val && pos2Val === pos3Val) {
-        console.log("Winner", pos1Val);
+        // console.log("Winner", pos1Val);
+        showWinner(pos1Val);
       }
     }
   }
 };
+
+newGameBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", resetGame);
