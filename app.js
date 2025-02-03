@@ -11,3 +11,7 @@ winning patterns =  0, 1, 2
 total 8 winning patterns
 
 */
+
+// accessing all boxes :
+
+let boxes = document.querySelectorAll(".box");
